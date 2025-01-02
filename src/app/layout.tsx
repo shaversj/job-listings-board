@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${leagueSpartan.variable} antialiased`}>{children}</body>
+      <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
     </html>
   );
 }
