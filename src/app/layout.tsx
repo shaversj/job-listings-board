@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { League_Spartan } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
 import "./globals.css";
 
 const leagueSpartan = League_Spartan({
@@ -19,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
+      <NuqsAdapter>
+        <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
+      </NuqsAdapter>
     </html>
   );
 }

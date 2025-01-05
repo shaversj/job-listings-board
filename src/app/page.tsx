@@ -1,8 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import { jobData } from "@/data/job-data";
+import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs";
+import JobCategory from "@/components/JobCategory";
+import type { Job, JobCategoryFilter } from "@/types/types";
 
 export default function Home() {
-  // const job = jobData[0];
+  const [jobCategoryFilter, setJobCategoryFilter] = useQueryStates({
+    role: parseAsArrayOf(parseAsString, ","),
+    level: parseAsArrayOf(parseAsString, ","),
+    languages: parseAsArrayOf(parseAsString, ","),
+    tools: parseAsArrayOf(parseAsString, ","),
+  });
+
+  const addJobCategoryFilter = (category: keyof JobCategoryFilter, value: string) => {
+    setJobCategoryFilter((prev) => ({ ...prev, [category]: [...(prev[category] || []), value] }));
+  };
+
   return (
     <div className={"bg-[#effafa]"}>
       <header className={"relative h-[156px] bg-[#5da5a5] bg-[url('/images/bg-header-desktop.svg')] bg-no-repeat"}>
@@ -23,7 +38,7 @@ export default function Home() {
         </div>
       </header>
       <div className={"flex flex-col gap-y-6 px-[165px] pt-[76px]"}>
-        {jobData.map((job, index) => (
+        {jobData.map((job: Job, index: number) => (
           <div key={index} className={"shadow-custom-shadow flex items-center gap-x-6 rounded-[5px] bg-white px-10 py-8"}>
             <Image src={job.logo} alt="Company logo" width={88} height={88} />
             <div>
@@ -54,20 +69,10 @@ export default function Home() {
               </div>
             </div>
             <div className={"ml-auto inline-flex gap-x-4"}>
-              {job.role && <h4 className={"text-body-16px-bold inline bg-light-grayish-cyan-filter px-[9px] pb-[3px] pt-[5px] text-desaturated-dark-cyan"}>{job.role}</h4>}
-              {job.level && <h4 className={"text-body-16px-bold inline bg-light-grayish-cyan-filter px-[9px] pb-[3px] pt-[5px] text-desaturated-dark-cyan"}>{job.level}</h4>}
-              {job.languages.length > 0 &&
-                job.languages.map((language) => (
-                  <h4 key={language} className={"text-body-16px-bold inline bg-light-grayish-cyan-filter px-[9px] pb-[3px] pt-[5px] text-desaturated-dark-cyan"}>
-                    {language}
-                  </h4>
-                ))}
-              {job.tools.length > 0 &&
-                job.tools.map((tool) => (
-                  <h4 key={tool} className={"text-body-16px-bold inline bg-light-grayish-cyan-filter px-[9px] pb-[3px] pt-[5px] text-desaturated-dark-cyan"}>
-                    {tool}
-                  </h4>
-                ))}
+              {job.role && <JobCategory type={"role"} value={job.role} onClick={addJobCategoryFilter} />}
+              {job.level && <JobCategory type={"level"} value={job.level} onClick={addJobCategoryFilter} />}
+              {job.languages.length > 0 && job.languages.map((language) => <JobCategory key={language} type={"languages"} value={language} onClick={addJobCategoryFilter} />)}
+              {job.tools.length > 0 && job.tools.map((tool) => <JobCategory key={tool} type={"tools"} value={tool} onClick={addJobCategoryFilter} />)}
             </div>
           </div>
         ))}
