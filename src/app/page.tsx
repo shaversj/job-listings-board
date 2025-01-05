@@ -5,6 +5,7 @@ import { jobData } from "@/data/job-data";
 import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs";
 import JobCategory from "@/components/JobCategory";
 import type { Job, JobCategoryFilter } from "@/types/types";
+import CategoryBadge from "@/components/CategoryBadge";
 
 export default function Home() {
   const [jobCategoryFilter, setJobCategoryFilter] = useQueryStates({
@@ -15,25 +16,27 @@ export default function Home() {
   });
 
   const addJobCategoryFilter = (category: keyof JobCategoryFilter, value: string) => {
-    setJobCategoryFilter((prev) => ({ ...prev, [category]: [...(prev[category] || []), value] }));
+    setJobCategoryFilter((prev) => ({
+      ...prev,
+      [category]: prev[category]?.includes(value) ? prev[category] : [...(prev[category] || []), value],
+    }));
   };
+
+  const filteredJobs = jobData.filter((job) => {
+    const roleMatch = jobCategoryFilter.role?.length === 0 || jobCategoryFilter.role?.some((role) => job.role.includes(role));
+    const levelMatch = jobCategoryFilter.level?.length === 0 || jobCategoryFilter.level?.some((level) => job.level.includes(level));
+    const languagesMatch = jobCategoryFilter.languages?.length === 0 || jobCategoryFilter.languages?.some((language) => job.languages.includes(language));
+    const toolsMatch = jobCategoryFilter.tools?.length === 0 || jobCategoryFilter.tools?.some((tool) => job.tools.includes(tool));
+    return roleMatch || levelMatch || languagesMatch || toolsMatch;
+  });
+
+  const listOfFilteredCategories = Object.values(jobCategoryFilter).flat().filter(Boolean);
 
   return (
     <div className={"bg-[#effafa]"}>
       <header className={"relative h-[156px] bg-[#5da5a5] bg-[url('/images/bg-header-desktop.svg')] bg-no-repeat"}>
-        <div className={"shadow-custom-shadow absolute -bottom-9 left-1/2 flex h-[72px] w-[1110px] -translate-x-1/2 items-center rounded-[5px] bg-white px-10 py-5"}>
-          <div className={"flex"}>
-            <h4 className={"text-body-16px-bold inline bg-light-grayish-cyan-filter px-[9px] pb-[3px] pt-[5px] text-desaturated-dark-cyan"}>Featured</h4>
-            <svg className={"group"} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path className={"fill-[#5CA5A5] group-hover:fill-[#2B3939]"} d="M0 0H28C30.2091 0 32 1.79086 32 4V28C32 30.2091 30.2091 32 28 32H0V0Z" />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M22.435 11.1213L20.3137 9L15.7175 13.5962L11.1213 9L9 11.1213L13.5962 15.7175L9 20.3137L11.1213 22.435L15.7175 17.8388L20.3137 22.435L22.435 20.3137L17.8388 15.7175L22.435 11.1213Z"
-                fill="white"
-              />
-            </svg>
-          </div>
+        <div className={"shadow-custom-shadow absolute -bottom-9 left-1/2 flex h-[72px] w-[1110px] -translate-x-1/2 items-center gap-x-4 rounded-[5px] bg-white px-10 py-5"}>
+          {listOfFilteredCategories && listOfFilteredCategories.map((category) => <CategoryBadge key={category} category={category} />)}
           <p className={"text-body-16px-bold ml-auto text-dark-grayish-cyan hover:text-desaturated-dark-cyan hover:underline"}>Clear</p>
         </div>
       </header>
