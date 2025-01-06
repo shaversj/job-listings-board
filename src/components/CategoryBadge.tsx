@@ -1,7 +1,5 @@
-import { JobCategoryFilter } from "@/types/types";
-
 type CategoryBadgeProps = {
-  category: keyof JobCategoryFilter;
+  category: string | null;
 };
 
 export default function CategoryBadge({ category }: CategoryBadgeProps) {

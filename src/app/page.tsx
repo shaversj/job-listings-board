@@ -22,11 +22,24 @@ export default function Home() {
     }));
   };
 
+  const clearAllCategories = () => {
+    setJobCategoryFilter({
+      role: null,
+      level: null,
+      languages: null,
+      tools: null,
+    });
+  };
+
   const filteredJobs = jobData.filter((job) => {
-    const roleMatch = jobCategoryFilter.role?.length === 0 || jobCategoryFilter.role?.some((role) => job.role.includes(role));
-    const levelMatch = jobCategoryFilter.level?.length === 0 || jobCategoryFilter.level?.some((level) => job.level.includes(level));
-    const languagesMatch = jobCategoryFilter.languages?.length === 0 || jobCategoryFilter.languages?.some((language) => job.languages.includes(language));
-    const toolsMatch = jobCategoryFilter.tools?.length === 0 || jobCategoryFilter.tools?.some((tool) => job.tools.includes(tool));
+    const noFilters = Object.values(jobCategoryFilter).every((filter) => !filter?.length);
+    if (noFilters) return true;
+
+    const roleMatch = (jobCategoryFilter.role ?? []).some((role) => job.role.includes(role));
+    const levelMatch = (jobCategoryFilter.level ?? []).some((level) => job.level.includes(level));
+    const languagesMatch = (jobCategoryFilter.languages ?? []).some((language) => job.languages.includes(language));
+    const toolsMatch = (jobCategoryFilter.tools ?? []).some((tool) => job.tools.includes(tool));
+
     return roleMatch || levelMatch || languagesMatch || toolsMatch;
   });
 
@@ -36,12 +49,16 @@ export default function Home() {
     <div className={"bg-[#effafa]"}>
       <header className={"relative h-[156px] bg-[#5da5a5] bg-[url('/images/bg-header-desktop.svg')] bg-no-repeat"}>
         <div className={"shadow-custom-shadow absolute -bottom-9 left-1/2 flex h-[72px] w-[1110px] -translate-x-1/2 items-center gap-x-4 rounded-[5px] bg-white px-10 py-5"}>
-          {listOfFilteredCategories && listOfFilteredCategories.map((category) => <CategoryBadge key={category} category={category} />)}
-          <p className={"text-body-16px-bold ml-auto text-dark-grayish-cyan hover:text-desaturated-dark-cyan hover:underline"}>Clear</p>
+          {listOfFilteredCategories.map((category) => (
+            <CategoryBadge key={category} category={category} />
+          ))}
+          <button onClick={() => clearAllCategories()} className={"text-body-16px-bold ml-auto text-dark-grayish-cyan hover:text-desaturated-dark-cyan hover:underline"}>
+            Clear
+          </button>
         </div>
       </header>
       <div className={"flex flex-col gap-y-6 px-[165px] pt-[76px]"}>
-        {jobData.map((job: Job, index: number) => (
+        {filteredJobs.map((job: Job, index: number) => (
           <div key={index} className={"shadow-custom-shadow flex items-center gap-x-6 rounded-[5px] bg-white px-10 py-8"}>
             <Image src={job.logo} alt="Company logo" width={88} height={88} />
             <div>
