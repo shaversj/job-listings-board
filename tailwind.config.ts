@@ -18,8 +18,11 @@ export default {
       fontSize: {
         "new-featured": ["0.875rem", { fontWeight: "bold", lineHeight: "0.875rem", letterSpacing: "-0.11px" }],
         "heading-18px-bold": ["1.125rem", { fontWeight: "bold" }],
+        "heading-13px-bold": ["0.8125rem", { fontWeight: "bold" }],
         "heading-22px-bold": ["1.375rem", { fontWeight: "bold", lineHeight: "1.5rem" }],
+        "heading-15px-bold": ["0.9375rem", { fontWeight: "bold", lineHeight: "1.5rem" }],
         "subheading-18px-medium": ["1.125rem", { fontWeight: "500", lineHeight: "1.5rem", letterSpacing: "-0.14px" }],
+        "subheading-16px-medium": ["1rem", { fontWeight: "500", lineHeight: "1.5rem", letterSpacing: "-0.12px" }],
         "body-16px-bold": ["1rem", { fontWeight: "bold", lineHeight: "1.5rem", letterSpacing: "-0.12px" }],
       },
       fontFamily: {
