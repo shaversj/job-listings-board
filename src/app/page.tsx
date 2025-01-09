@@ -55,15 +55,16 @@ export default function Home() {
 
   return (
     <div className={"bg-[#effafa]"}>
-      <header className={"relative h-[156px] bg-[#5da5a5] bg-[url('/images/bg-header-desktop.svg')] bg-no-repeat"}>
-        <div className={"shadow-custom-shadow absolute -bottom-9 left-1/2 flex h-[72px] w-[1110px] -translate-x-1/2 items-center gap-x-4 rounded-[5px] bg-white px-10 py-5"}>
-          {Object.entries(jobCategoryFilter).map(([category, values]) => values?.map((value) => <CategoryBadge key={value} category={category} value={value} clearValueInCategory={clearValueInCategory} />))}
+      <header className={"h-[156px] bg-[#5da5a5] bg-[url('/images/bg-header-desktop.svg')] bg-no-repeat"}></header>
+      <div className={"relative flex flex-col gap-y-[40px] px-6 pt-[76px] lg:gap-y-6 lg:px-[165px]"}>
+        <div className={"shadow-custom-shadow relative bottom-28 flex items-center gap-x-4 gap-y-4 rounded-[5px] bg-white px-10 py-5"}>
+          <div className={"flex flex-wrap gap-x-4 gap-y-4"}>
+            {Object.entries(jobCategoryFilter).map(([category, values]) => values?.map((value) => <CategoryBadge key={value} category={category} value={value} clearValueInCategory={clearValueInCategory} />))}
+          </div>
           <button onClick={() => clearAllCategories()} className={"text-body-16px-bold ml-auto text-dark-grayish-cyan hover:text-desaturated-dark-cyan hover:underline"}>
             Clear
           </button>
         </div>
-      </header>
-      <div className={"flex flex-col gap-y-[40px] px-6 pt-[76px] lg:gap-y-6 lg:px-[165px]"}>
         {filteredJobs.map((job: Job, index: number) => (
           <div key={index} className={`shadow-custom-shadow relative flex flex-col gap-x-6 rounded-[5px] bg-white px-6 pb-6 pt-8 lg:flex-row lg:items-center lg:px-10 lg:py-8 ${job.featured && "border-l-[5px] border-[#5CA5A5]"}`}>
             <Image className={"absolute top-0 size-[48px] -translate-y-[24px] lg:static lg:size-[88px]"} src={job.logo} alt="Company logo" width={88} height={88} />
