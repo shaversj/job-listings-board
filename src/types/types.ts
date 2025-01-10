@@ -1,8 +1,8 @@
 export interface JobCategoryFilter {
-  role: string[];
-  level: string[];
-  languages: string[];
-  tools: string[];
+  role: string[] | null;
+  level: string[] | null;
+  languages: string[] | null;
+  tools: string[] | null;
 }
 
 export interface Job {

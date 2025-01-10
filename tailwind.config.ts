@@ -14,6 +14,7 @@ export default {
         "light-grayish-cyan-filter": "hsl(180, 31%, 95%)",
         "dark-grayish-cyan": "hsl(180, 8%, 52%)",
         "very-dark-grayish-cyan": "hsl(180, 14%, 20%)",
+        "acqua-spring": "hsl(180, 52%, 96%)",
       },
       fontSize: {
         "new-featured": ["0.875rem", { fontWeight: "bold", lineHeight: "0.875rem", letterSpacing: "-0.11px" }],
