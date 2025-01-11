@@ -3,6 +3,7 @@ import { League_Spartan } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import "./globals.css";
+import { Suspense } from "react";
 
 const leagueSpartan = League_Spartan({
   variable: "--font-league-spartan",
@@ -21,9 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NuqsAdapter>
-        <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
-      </NuqsAdapter>
+      <Suspense>
+        <NuqsAdapter>
+          <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
+        </NuqsAdapter>
+      </Suspense>
     </html>
   );
 }
