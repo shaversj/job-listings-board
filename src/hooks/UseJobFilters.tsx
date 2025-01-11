@@ -1,5 +1,3 @@
-"use client";
-
 import { useQueryStates } from "nuqs";
 import { parseAsArrayOf, parseAsString } from "nuqs";
 import type { Job, JobCategoryFilter } from "@/types/types";
