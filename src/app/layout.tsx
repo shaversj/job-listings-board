@@ -22,9 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NuqsAdapter>
-        <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
-      </NuqsAdapter>
+      <Suspense>
+        <NuqsAdapter>
+          <body className={`${leagueSpartan.variable} font-spartan antialiased`}>{children}</body>
+        </NuqsAdapter>
+      </Suspense>
     </html>
   );
 }
