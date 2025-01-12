@@ -7,7 +7,7 @@ import JobCard from "@/components/JobCard";
 import useJobFilters from "@/hooks/UseJobFilters";
 import { jobData } from "@/data/job-data";
 
-export default function JobClient() {
+export default function JobBoard() {
   const { jobCategoryFilter, hasFilters, addJobCategoryFilter, clearValueInCategory, clearAllCategories, filteredJobs } = useJobFilters({ jobData });
 
   return (

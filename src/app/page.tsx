@@ -1,12 +1,12 @@
 "use client";
 
 import { Suspense } from "react";
-import JobClient from "@/components/Client";
+import JobBoard from "@/components/JobBoard";
 
 export default function Home() {
   return (
     <Suspense>
-      <JobClient />
+      <JobBoard />
     </Suspense>
   );
 }
